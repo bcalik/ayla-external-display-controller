@@ -1,0 +1,16 @@
+{
+  "name": "ayla-brightness-controller",
+  "version": "1.0.0",
+  "description": "Brightness Controller for External Mac Displays",
+  "author": "Burak Çalık",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ./app",
+    "clean": "rm -rf ./dist/osx",
+    "build": "npm run clean && electron-packager ./app \"Ayla\" --out=dist/osx --platform=darwin --arch=x64 --version=1.4.15 --icon=assets/manapot.icns"
+  },
+  "devDependencies": {
+    "electron": "^1.4.15",
+    "electron-packager": "^8.5.2"
+  }
+}
