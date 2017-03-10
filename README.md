@@ -1,4 +1,5 @@
-# Ayla Brightness Controller for External Mac Displays
+# Ayla External Display Controller (Brighness, Contrast, Volume) for Mac
+Control your external macbook display using external keyboard shortcuts.
 
 ## Installing dependencies
 ```bash
@@ -18,7 +19,7 @@ npm start
 ```
 
 ## Usage
-Use shortcuts to adjust brightness and contrast.
+Use shortcuts to adjust brightness, contrast, and volume.
 * F1 - Decrease brigthness
 * F2 - Increase brigthness
 * Shift+F1 - Decrease contrast
