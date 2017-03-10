@@ -1,4 +1,4 @@
-const {app, Menu, Tray, globalShortcut} = require('electron')
+const {app, Menu, Tray, globalShortcut, dialog} = require('electron')
 const exec = require('child_process').exec
 
 // Hide dock icon
@@ -21,6 +21,15 @@ app.on('ready', () => {
   globalShortcut.register('F2', () => {
     brightnessInc();
   })
+  globalShortcut.register('F12', () => {
+    volumeInc();
+  })
+  globalShortcut.register('F11', () => {
+    volumeDec();
+  })
+  globalShortcut.register('F10', () => {
+    toggleVolumeMute();
+  })
 
   // Register a 'F1' shortcut listener.
   globalShortcut.register('shift+F1', () => {
@@ -38,6 +47,9 @@ app.on('will-quit', () => {
 
 let currentBrightness = 20;
 let currentContrast = 70;
+let currentVolume = 1; // volume level
+let currentVolumeMute = 2; // 1: muted / 2: unmuted
+
 let brightnessInc = function(){
   currentBrightness += 3;
   if (currentBrightness >= 100)
@@ -62,11 +74,31 @@ let contrastDec = function(){
     currentContrast = 0;
   contrastSet();
 }
+let volumeInc = function(){
+  currentVolume += 1;
+  if (currentVolume >= 100)
+    currentVolume = 100;
+  volumeSet();
+}
+let volumeDec = function(){
+  currentVolume -= 1;
+  if (currentVolume <= 0)
+    currentVolume = 0;
+  volumeSet();
+}
+let toggleVolumeMute = function(){
+  if (currentVolumeMute == 1)
+    currentVolumeMute = 2;
+  else
+    currentVolumeMute = 1;
+  volumeMuteSet();
+}
 
 let brightnessSet = function(){
-  exec('ddcctl -d 1 -b '+currentBrightness, (error, stdout, stderr) => {
+  exec('/usr/local/bin/ddcctl -d 1 -b '+currentBrightness, (error, stdout, stderr) => {
     if (error) {
-      console.error(`exec error: ${error}`);
+      dialog.showErrorBox('Error', `error: ${error}`);
+      console.error('Error', `error: ${error}`);
       return;
     }
     setTitle();
@@ -74,9 +106,32 @@ let brightnessSet = function(){
 }
 
 let contrastSet = function(){
-  exec('ddcctl -d 1 -c '+currentContrast, (error, stdout, stderr) => {
+  exec('/usr/local/bin/ddcctl -d 1 -c '+currentContrast, (error, stdout, stderr) => {
     if (error) {
-      console.error(`exec error: ${error}`);
+      dialog.showErrorBox('Error', `error: ${error}`);
+      console.error('Error', `error: ${error}`);
+      return;
+    }
+    setTitle();
+  });
+}
+
+let volumeSet = function(){
+  exec('/usr/local/bin/ddcctl -d 1 -v '+currentVolume, (error, stdout, stderr) => {
+    if (error) {
+      dialog.showErrorBox('Error', `error: ${error}`);
+      console.error('Error', `error: ${error}`);
+      return;
+    }
+    setTitle();
+  });
+}
+
+let volumeMuteSet = function(){
+  exec('/usr/local/bin/ddcctl -d 1 -m '+currentVolumeMute, (error, stdout, stderr) => {
+    if (error) {
+      dialog.showErrorBox('Error', `error: ${error}`);
+      console.error('Error', `error: ${error}`);
       return;
     }
     setTitle();
@@ -91,3 +146,9 @@ brightnessSet();
 setTimeout(function(){
   contrastSet();
 }, 250);
+setTimeout(function(){
+  volumeSet();
+}, 500);
+setTimeout(function(){
+  volumeMuteSet();
+}, 750);

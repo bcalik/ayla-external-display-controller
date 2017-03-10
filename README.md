@@ -23,6 +23,9 @@ Use shortcuts to adjust brightness and contrast.
 * F2 - Increase brigthness
 * Shift+F1 - Decrease contrast
 * Shift+F2 - Increase contrast
+* F10 - Toggle volume mute
+* F11 - Decrease volume
+* F12 - Increase volume
 
 ## Extras
 You can also flip specific function keys on your keyboard.  
