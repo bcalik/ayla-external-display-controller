@@ -97,7 +97,7 @@ let toggleVolumeMute = function(){
 let brightnessSet = function(){
   exec('/usr/local/bin/ddcctl -d 1 -b '+currentBrightness, (error, stdout, stderr) => {
     if (error) {
-      dialog.showErrorBox('Error', `error: ${error}`);
+      // dialog.showErrorBox('Error', `error: ${error}`);
       console.error('Error', `error: ${error}`);
       return;
     }
@@ -108,7 +108,7 @@ let brightnessSet = function(){
 let contrastSet = function(){
   exec('/usr/local/bin/ddcctl -d 1 -c '+currentContrast, (error, stdout, stderr) => {
     if (error) {
-      dialog.showErrorBox('Error', `error: ${error}`);
+      // dialog.showErrorBox('Error', `error: ${error}`);
       console.error('Error', `error: ${error}`);
       return;
     }
@@ -119,7 +119,7 @@ let contrastSet = function(){
 let volumeSet = function(){
   exec('/usr/local/bin/ddcctl -d 1 -v '+currentVolume, (error, stdout, stderr) => {
     if (error) {
-      dialog.showErrorBox('Error', `error: ${error}`);
+      // dialog.showErrorBox('Error', `error: ${error}`);
       console.error('Error', `error: ${error}`);
       return;
     }
@@ -130,7 +130,7 @@ let volumeSet = function(){
 let volumeMuteSet = function(){
   exec('/usr/local/bin/ddcctl -d 1 -m '+currentVolumeMute, (error, stdout, stderr) => {
     if (error) {
-      dialog.showErrorBox('Error', `error: ${error}`);
+      // dialog.showErrorBox('Error', `error: ${error}`);
       console.error('Error', `error: ${error}`);
       return;
     }
@@ -145,10 +145,10 @@ let setTitle = function(){
 brightnessSet();
 setTimeout(function(){
   contrastSet();
-}, 250);
+}, 1000);
 setTimeout(function(){
   volumeSet();
-}, 500);
+}, 2000);
 setTimeout(function(){
   volumeMuteSet();
-}, 750);
+}, 3000);
